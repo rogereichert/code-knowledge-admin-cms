@@ -2,14 +2,14 @@ const db = require('../database/db');
 
 // Função para pegar todos os posts
 exports.getAllPosts = (req, res) => {
-  const query = 'SELECT * FROM posts';
-  db.query(query, (err, results) => {
-    if (err) {
-      console.error('Erro no MySQL:', err); // 👈 MOSTRA O ERRO NO CONSOLE
-      return res.status(500).json({ error: 'Erro ao buscar os posts' });
-    }
-    res.json(results);
-  });
+    const query = 'SELECT * FROM posts';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Erro no MySQL:', err); // MOSTRA O ERRO NO CONSOLE
+            return res.status(500).json({ error: 'Erro ao buscar os posts' });
+        }
+        res.json(results);
+    });
 };
 
 exports.createPost = (req, res) => {
@@ -29,7 +29,7 @@ exports.updatePost = (req, res) => {
     const query = 'UPDATE posts SET titulo = ?, conteudo = ?, categoria_id = ? WHERE id = ?'
     db.query(query, [titulo, conteudo, categoria_id, id], (err, results) => {
         if (err) {
-            return res.status(500).json({ error: 'Erro ao atualizar o post'})
+            return res.status(500).json({ error: 'Erro ao atualizar o post' })
         }
         res.json({ id, titulo, conteudo, categoria_id });
     })
