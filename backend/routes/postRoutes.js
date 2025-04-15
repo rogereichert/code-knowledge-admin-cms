@@ -11,6 +11,9 @@ router.post('/', postController.createPost);
 // Rota para atualizar um post existente
 router.put('/:id', postController.updatePost);
 
+// Rota para deletar um post
+router.delete('/:id', postController.deletePost)
+
 // Exportando o roteador
 module.exports = router;
 

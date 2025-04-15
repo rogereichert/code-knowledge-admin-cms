@@ -34,3 +34,16 @@ exports.updatePost = (req, res) => {
         res.json({ id, titulo, conteudo, categoria_id });
     })
 }
+
+// Função para deletar um post
+exports.deletePost = (req, res) => {
+    const { id } = req.params;
+    const query = 'DELETE FROM posts WHERE id = ?'
+    db.query(query, [id], (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: 'Erro ao deletar o post' })
+        }
+
+        res.status(204).send();
+    })
+}
