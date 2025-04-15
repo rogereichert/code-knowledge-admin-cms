@@ -26,11 +26,4 @@ Inclui:
 
 ## 🗂 Estrutura do Projeto
 
-📦 projeto-conhecimento
-├── 📁 public/               → Site público (frontend principal)
-├── 📁 admin/                → Painel administrativo (frontend)
-├── 📁 backend/              → Backend Node.js com rotas (Express)
-├── 📁 database/             → Scripts SQL e conexão com MySQL
-├── 📁 uploads/              → Se quiser usar imagens depois
-├── 📄 package.json
-└── 📄 .env
+devknow/ → Pasta raiz do projeto ├── 📁 admin/ → Painel administrativo (criação de posts, categorias, etc.) │ ├── index.html │ ├── criar-post.html │ └── criar-categoria.html │ ├── 📁 public/ → Site público (exibição dos posts) │ ├── index.html │ └── post.html │ ├── 📁 backend/ → API em Node.js + Express │ ├── server.js → Servidor principal │ ├── 📁 routes/ → Rotas da API (posts, categorias, menus, etc.) │ └── 📁 controllers/ → Lógica das rotas │ ├── 📁 database/ → Scripts SQL e conexão com MySQL │ ├── db.js → Conexão com o banco │ └── schema.sql → Criação das tabelas │ ├── .env → Variáveis de ambiente (credenciais do MySQL, etc.) ├── .gitignore → Arquivos ignorados pelo Git ├── package.json → Dependências e scripts do Node.js └── README.md → Documentação do projeto
