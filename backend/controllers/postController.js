@@ -22,3 +22,15 @@ exports.createPost = (req, res) => {
         res.status(201).json({ id: results.insertId, titulo, conteudo, categoria_id });
     })
 }
+
+exports.updatePost = (req, res) => {
+    const { id } = req.params
+    const { titulo, conteudo, categoria_id } = req.body
+    const query = 'UPDATE posts SET titulo = ?, conteudo = ?, categoria_id = ? WHERE id = ?'
+    db.query(query, [titulo, conteudo, categoria_id, id], (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: 'Erro ao atualizar o post'})
+        }
+        res.json({ id, titulo, conteudo, categoria_id });
+    })
+}
