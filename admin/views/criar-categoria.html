@@ -1,0 +1,24 @@
+<div class="p-6 bg-white rounded-xl shadow-md max-w-3xl mx-auto">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+      <i class="fas fa-tags text-green-600"></i> Criar Nova Categoria
+    </h2>
+  
+    <form id="form-criar-categoria" class="space-y-4">
+      <div>
+        <label class="block text-sm font-semibold text-gray-600 mb-1" for="nome">Nome da Categoria</label>
+        <input type="text" id="nome" name="nome" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" required />
+      </div>
+  
+      <div>
+        <label class="block text-sm font-semibold text-gray-600 mb-1" for="descricao">Descrição</label>
+        <textarea id="descricao" name="descricao" rows="4" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" required></textarea>
+      </div>
+  
+      <div class="flex justify-end">
+        <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition-all">
+          <i class="fas fa-save mr-2"></i> Salvar Categoria
+        </button>
+      </div>
+    </form>
+  </div>
+  

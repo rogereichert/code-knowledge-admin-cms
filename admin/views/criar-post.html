@@ -1,0 +1,31 @@
+<div class="p-6 bg-white rounded-xl shadow-md max-w-3xl mx-auto">
+  <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+    <i class="fas fa-pen-nib text-indigo-600"></i> Criar Novo Post
+  </h2>
+
+  <form id="form-criar-post" class="space-y-4">
+    <div>
+      <label class="block text-sm font-semibold text-gray-600 mb-1" for="titulo">Título do Post</label>
+      <input type="text" id="titulo" name="titulo" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" required />
+    </div>
+
+    <div>
+      <label class="block text-sm font-semibold text-gray-600 mb-1" for="categoria">Categoria</label>
+      <select id="categoria" name="categoria" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+        <option value="">Selecione uma categoria</option>
+        <!-- opções preenchidas dinamicamente depois -->
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-sm font-semibold text-gray-600 mb-1" for="conteudo">Conteúdo</label>
+      <textarea id="conteudo" name="conteudo" rows="6" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" required></textarea>
+    </div>
+
+    <div class="flex justify-end">
+      <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-all">
+        <i class="fas fa-save mr-2"></i> Publicar Post
+      </button>
+    </div>
+  </form>
+</div>
