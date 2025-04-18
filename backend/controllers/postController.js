@@ -2,7 +2,7 @@ const db = require('../database/db');
 
 // Função para pegar todos os posts
 exports.getAllPosts = (req, res) => {
-    const query = 'SELECT * FROM posts';
+    const query = 'SELECT `posts`.`titulo`, `posts`.`conteudo`, `posts`.`id`, `categorias`.`id`, `categorias`.`nome` FROM `projeto_conhecimento`.`posts` INNER JOIN `projeto_conhecimento`.`categorias` ON (`posts`.`categoria_id` = `categorias`.`id`);';
     db.query(query, (err, results) => {
         if (err) {
             console.error('Erro no MySQL:', err); // MOSTRA O ERRO NO CONSOLE
