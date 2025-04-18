@@ -82,12 +82,19 @@
           .then((html) => {
             document.getElementById("main-content").innerHTML = html;
 
-            // ✅ Depois de carregar o HTML, chama a função correspondente
+            // ✅ Executar funções após carregar o HTML
             if (
               view === "criar-categoria" &&
               typeof iniciarCategoriaForm === "function"
             ) {
               iniciarCategoriaForm();
+            }
+
+            if (
+              view === "criar-post" &&
+              typeof iniciarPostForm === "function"
+            ) {
+              iniciarPostForm();
             }
           });
       }
@@ -99,5 +106,6 @@
     </script>
 
     <script src="../admin/js/categoria.js"></script>
+    <script src="../admin/js/post.js"></script>
   </body>
 </html>
