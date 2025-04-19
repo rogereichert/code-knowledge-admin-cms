@@ -96,6 +96,10 @@
             ) {
               iniciarPostForm();
             }
+            
+            if (view === "dashboard") {
+              carregarDadosDashboard();
+            }
           });
       }
 
@@ -104,7 +108,8 @@
         // Aqui pode ser redirecionado para login.html futuramente
       }
     </script>
-
+    
+    <script src="../admin/js/dashboard.js"></script>
     <script src="../admin/js/categoria.js"></script>
     <script src="../admin/js/post.js"></script>
   </body>

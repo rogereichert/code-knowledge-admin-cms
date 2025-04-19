@@ -1,79 +1,110 @@
 const db = require('../database/db');
 
-// Função para pegar todos os posts
-exports.getAllPosts = (req, res) => {
-    const query = 'SELECT `posts`.`titulo`, `posts`.`conteudo`, `posts`.`id`, `categorias`.`id`, `categorias`.`nome` FROM `projeto_conhecimento`.`posts` INNER JOIN `projeto_conhecimento`.`categorias` ON (`posts`.`categoria_id` = `categorias`.`id`);';
+// Mostrar todos os posts
+exports.listarPosts = (req, res) => {
+    const query = `
+        SELECT posts.id, posts.titulo, posts.conteudo, categorias.nome AS categoria
+        FROM posts
+        INNER JOIN categorias ON posts.categoria_id = categorias.id
+        ORDER BY posts.id DESC
+    `;
     db.query(query, (err, results) => {
         if (err) {
-            console.error('Erro no MySQL:', err); // MOSTRA O ERRO NO CONSOLE
-            return res.status(500).json({ error: 'Erro ao buscar os posts' });
+            console.error("Erro ao buscar posts:", err);
+            return res.status(500).json({ error: "Erro ao buscar posts" });
         }
-        res.status(200).json(results); // Sempre especificar o status HTTP
+        res.status(200).json(results);
     });
 };
 
-// Função para criar um novo post
-exports.createPost = (req, res) => {
-    console.log("BODY:", req.body);
+// Cadastrar um novo post
+exports.cadastrarPost = (req, res) => {
     const { titulo, conteudo, categoria_id } = req.body;
 
-    // Validação para garantir que todos os campos necessários estejam presentes
     if (!titulo || !conteudo || !categoria_id) {
-        return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
+        return res.status(400).json({ error: "Preencha todos os campos obrigatórios." });
     }
 
-    const query = 'INSERT INTO posts (titulo, conteudo, categoria_id) VALUES (?, ?, ?)';
-    db.query(query, [titulo, conteudo, categoria_id], (err, results) => {
+    const query = "INSERT INTO posts (titulo, conteudo, categoria_id) VALUES (?, ?, ?)";
+    db.query(query, [titulo, conteudo, categoria_id], (err, result) => {
         if (err) {
-            console.error('Erro ao criar post:', err);
-            return res.status(500).json({ error: 'Erro ao criar o post' });
+            console.error("Erro ao cadastrar post:", err);
+            return res.status(500).json({ error: "Erro ao cadastrar post" });
         }
-        res.status(201).json({ id: results.insertId, titulo, conteudo, categoria_id });
+        res.status(201).json({ message: "Post cadastrado com sucesso!", postId: result.insertId });
     });
 };
 
-// Função para atualizar um post existente
-exports.updatePost = (req, res) => {
+// Editar um post
+exports.editarPost = (req, res) => {
     const { id } = req.params;
     const { titulo, conteudo, categoria_id } = req.body;
 
-    // Validação para garantir que os dados fornecidos estejam completos
     if (!titulo || !conteudo || !categoria_id) {
-        return res.status(400).json({ error: 'Todos os campos são obrigatórios para atualização.' });
+        return res.status(400).json({ error: "Preencha todos os campos obrigatórios." });
     }
 
-    const query = 'UPDATE posts SET titulo = ?, conteudo = ?, categoria_id = ? WHERE id = ?';
-    db.query(query, [titulo, conteudo, categoria_id, id], (err, results) => {
+    const query = "UPDATE posts SET titulo = ?, conteudo = ?, categoria_id = ? WHERE id = ?";
+    db.query(query, [titulo, conteudo, categoria_id, id], (err) => {
         if (err) {
-            console.error('Erro ao atualizar post:', err);
-            return res.status(500).json({ error: 'Erro ao atualizar o post' });
+            console.error("Erro ao editar post:", err);
+            return res.status(500).json({ error: "Erro ao editar post" });
         }
-
-        // Verifica se algum registro foi atualizado
-        if (results.affectedRows === 0) {
-            return res.status(404).json({ error: 'Post não encontrado.' });
-        }
-
-        res.status(200).json({ id, titulo, conteudo, categoria_id });
+        res.status(200).json({ message: "Post atualizado com sucesso!" });
     });
 };
 
-// Função para deletar um post
-exports.deletePost = (req, res) => {
+// Excluir um post
+exports.excluirPost = (req, res) => {
     const { id } = req.params;
 
-    const query = 'DELETE FROM posts WHERE id = ?';
-    db.query(query, [id], (err, results) => {
+    const query = "DELETE FROM posts WHERE id = ?";
+    db.query(query, [id], (err) => {
         if (err) {
-            console.error('Erro ao deletar post:', err);
-            return res.status(500).json({ error: 'Erro ao deletar o post' });
+            console.error("Erro ao excluir post:", err);
+            return res.status(500).json({ error: "Erro ao excluir post" });
+        }
+        res.status(200).json({ message: "Post excluído com sucesso!" });
+    });
+};
+
+// Mostrar o total de posts
+exports.mostrarTotalPosts = (req, res) => {
+    const query = "SELECT COUNT(*) AS total FROM posts";
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error("Erro ao contar posts:", err);
+            return res.status(500).json({ error: "Erro ao contar posts" });
+        }
+        res.status(200).json({ total: results[0].total });
+    });
+};
+
+// Mostrar o último post (mais recente)
+exports.mostrarUltimoPost = (req, res) => {
+    const query = `
+       SELECT
+            posts.titulo,
+            categorias.nome AS categoria,
+            posts.conteudo,
+            posts.criado_em
+        FROM
+            projeto_conhecimento.posts
+        INNER JOIN projeto_conhecimento.categorias
+            ON posts.categoria_id = categorias.id
+        ORDER BY posts.criado_em DESC
+        LIMIT 1
+    `;
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error("Erro ao buscar o último post:", err);
+            return res.status(500).json({ error: "Erro ao buscar o último post" });
         }
 
-        // Verifica se algum registro foi deletado
-        if (results.affectedRows === 0) {
-            return res.status(404).json({ error: 'Post não encontrado.' });
+        if (results.length === 0) {
+            return res.status(200).json({ titulo: null });
         }
 
-        res.status(204).send(); // Status 204 não retorna corpo na resposta
+        res.status(200).json(results[0]);
     });
 };
