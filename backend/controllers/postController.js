@@ -1,9 +1,10 @@
 const db = require('../database/db');
 
-// Mostrar todos os posts
+// Mostrar todos os posts com categoria como objeto
 exports.listarPosts = (req, res) => {
     const query = `
-        SELECT posts.id, posts.titulo, posts.conteudo, categorias.nome AS categoria
+        SELECT posts.id, posts.titulo, posts.conteudo, posts.criado_em, 
+               categorias.id AS categoria_id, categorias.nome AS categoria_nome
         FROM posts
         INNER JOIN categorias ON posts.categoria_id = categorias.id
         ORDER BY posts.id DESC
@@ -13,7 +14,19 @@ exports.listarPosts = (req, res) => {
             console.error("Erro ao buscar posts:", err);
             return res.status(500).json({ error: "Erro ao buscar posts" });
         }
-        res.status(200).json(results);
+
+        const postsComCategoria = results.map(post => ({
+            id: post.id,
+            titulo: post.titulo,
+            conteudo: post.conteudo,
+            createdAt: post.criado_em,
+            categoria: {
+                id: post.categoria_id,
+                nome: post.categoria_nome
+            }
+        }));
+
+        res.status(200).json(postsComCategoria);
     });
 };
 
@@ -76,21 +89,23 @@ exports.mostrarTotalPosts = (req, res) => {
             console.error("Erro ao contar posts:", err);
             return res.status(500).json({ error: "Erro ao contar posts" });
         }
-        res.status(200).json({ total: results[0].total });
+        res.json({ total: results[0].total });
     });
 };
 
 // Mostrar o último post (mais recente)
 exports.mostrarUltimoPost = (req, res) => {
     const query = `
-       SELECT
+        SELECT
+            posts.id,
             posts.titulo,
-            categorias.nome AS categoria,
             posts.conteudo,
-            posts.criado_em
+            posts.criado_em,
+            categorias.id AS categoria_id,
+            categorias.nome AS categoria_nome
         FROM
-            projeto_conhecimento.posts
-        INNER JOIN projeto_conhecimento.categorias
+            posts
+        INNER JOIN categorias
             ON posts.categoria_id = categorias.id
         ORDER BY posts.criado_em DESC
         LIMIT 1
@@ -105,6 +120,17 @@ exports.mostrarUltimoPost = (req, res) => {
             return res.status(200).json({ titulo: null });
         }
 
-        res.status(200).json(results[0]);
+        const post = results[0];
+
+        res.status(200).json({
+            id: post.id,
+            titulo: post.titulo,
+            conteudo: post.conteudo,
+            criado_em: post.criado_em,
+            categoria: {
+                id: post.categoria_id,
+                nome: post.categoria_nome
+            }
+        });
     });
 };

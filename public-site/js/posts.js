@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
             postEl.innerHTML = `
               <h2 class="text-xl font-semibold mb-2">${post.titulo}</h2>
-              <p class="text-sm text-indigo-600 mb-2">Categoria: ${post.nome}</p>
+              <p class="text-sm text-indigo-600 mb-2">Categoria: ${post.categoria.nome}</p>
               <p class="text-gray-700">${post.conteudo}</p>
             `;
   

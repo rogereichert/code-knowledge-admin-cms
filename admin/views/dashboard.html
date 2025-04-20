@@ -1,36 +1,70 @@
-<!-- admin/views/dashboard.html -->
+<!-- Cards -->
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    <!-- Card: Total de Posts -->
-    <div class="bg-white rounded-xl shadow-md p-6 flex items-center gap-4 border-l-4 border-indigo-500">
-      <div class="bg-indigo-100 text-indigo-600 p-3 rounded-full">
-        <i class="fas fa-file-alt fa-lg"></i>
-      </div>
-      <div>
-        <p class="text-gray-600 text-sm">Total de Posts</p>
-        <h2 id="card-total-posts" class="text-2xl font-bold text-gray-800">0</h2>
-      </div>
+  <!-- Card: Total de Posts -->
+  <div class="bg-white rounded-xl shadow-md p-6 flex items-center gap-4 border-l-4 border-indigo-500">
+    <div class="bg-indigo-100 text-indigo-600 p-3 rounded-full">
+      <i class="fas fa-file-alt fa-lg"></i>
     </div>
-  
-    <!-- Card: Total de Categorias -->
-    <div class="bg-white rounded-xl shadow-md p-6 flex items-center gap-4 border-l-4 border-green-500">
-      <div class="bg-green-100 text-green-600 p-3 rounded-full">
-        <i class="fas fa-tags fa-lg"></i>
-      </div>
-      <div>
-        <p class="text-gray-600 text-sm">Total de Categorias</p>
-        <h2 id="card-total-categorias" class="text-2xl font-bold text-gray-800">0</h2>
-      </div>
-    </div>
-  
-    <!-- Card: Último Post Criado -->
-    <div class="bg-white rounded-xl shadow-md p-6 flex items-center gap-4 border-l-4 border-yellow-500">
-      <div class="bg-yellow-100 text-yellow-600 p-3 rounded-full">
-        <i class="fas fa-clock fa-lg"></i>
-      </div>
-      <div>
-        <p class="text-gray-600 text-sm">Último Post</p>
-        <h2 id="card-ultimo-post" class="text-base font-medium text-gray-800">-</h2>
-      </div>
+    <div>
+      <p class="text-gray-600 text-sm">Total de Posts</p>
+      <h2 id="card-total-posts" class="text-2xl font-bold text-gray-800">0</h2>
     </div>
   </div>
-  
+
+  <!-- Card: Total de Categorias -->
+  <div class="bg-white rounded-xl shadow-md p-6 flex items-center gap-4 border-l-4 border-green-500">
+    <div class="bg-green-100 text-green-600 p-3 rounded-full">
+      <i class="fas fa-tags fa-lg"></i>
+    </div>
+    <div>
+      <p class="text-gray-600 text-sm">Total de Categorias</p>
+      <h2 id="card-total-categorias" class="text-2xl font-bold text-gray-800">0</h2>
+    </div>
+  </div>
+
+  <!-- Card: Último Post Criado -->
+  <div class="bg-white rounded-xl shadow-md p-6 flex items-center gap-4 border-l-4 border-yellow-500">
+    <div class="bg-yellow-100 text-yellow-600 p-3 rounded-full">
+      <i class="fas fa-clock fa-lg"></i>
+    </div>
+    <div>
+      <p class="text-gray-600 text-sm">Último Post</p>
+      <h2 id="card-ultimo-post" class="text-base font-medium text-gray-800">-</h2>
+    </div>
+  </div>
+</div> <!-- 🔒 Fecha a grid dos cards -->
+
+<!-- Tabela de Todos os Posts -->
+<div class="mt-10 bg-white rounded-xl shadow-md p-6">
+  <h2 class="text-xl font-semibold text-gray-800 mb-4">
+    Todos os Posts
+  </h2>
+
+  <div class="overflow-x-auto">
+    <table class="min-w-full text-sm text-left text-gray-700">
+      <thead class="bg-indigo-100 text-indigo-800 uppercase text-xs font-semibold">
+        <tr>
+          <th class="px-4 py-3">Título</th>
+          <th class="px-4 py-3">Categoria</th>
+          <th class="px-4 py-3">Criado em</th>
+          <th class="px-4 py-3 text-center">Ações</th>
+        </tr>
+      </thead>
+      <tbody id="tabela-posts">
+        <!-- Os dados serão inseridos dinamicamente aqui -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  <!-- Paginação -->
+  <div class="mt-4 flex justify-end items-center space-x-2 text-sm text-gray-600">
+    <button class="px-3 py-1 rounded border hover:bg-gray-100">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <span class="px-2">Página 1 de 3</span>
+    <button class="px-3 py-1 rounded border hover:bg-gray-100">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+</div>
